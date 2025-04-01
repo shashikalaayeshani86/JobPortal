@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import { JobContext } from "../context/JobContext";
 
 const JobDetail = () => {
-  return (
-    <div className="p-6 text-xl text-center">
-        <h2 className="text-3xl font-bold">Job Details</h2>
-        <p className="text-lg text-gray-600">Detailed job description and application information</p>
-      </div>
-  )
-}
+  const { id } = useParams();
+  const jobs = useContext(JobContext);
+  const job = jobs.find((job) => job.id === parseInt(id));
 
-export default JobDetail
+  if (!job) {
+    return <div className="p-4 text-red-500">Job not found</div>;
+  }
+
+  return (
+    <div className="max-w-lg p-4 mx-auto my-20 bg-white border border-gray-200 shadow-lg rounded-2xl">
+      <h1 className="text-2xl font-bold text-gray-800">{job.title}</h1>
+      <p className="font-semibold text-gray-600">{job.company}</p>
+      <p className="text-sm text-gray-500">{job.location}</p>
+      <p className="mt-4 text-gray-700">{job.description}</p>
+      <Link to="/" className="inline-block mt-4 text-blue-500 hover:underline">
+        Back to Jobs
+      </Link>
+    </div>
+  );
+};
+
+export default JobDetail;
