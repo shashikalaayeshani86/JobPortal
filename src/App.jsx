@@ -1,18 +1,28 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import Navbar from "./components/Navbar"
 import Home  from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Dashboard from './components/Dashboard'
 import JobList from './pages/JobList'
 import JobDetail from './pages/JobDetail'
 import PostJob from './pages/PostJob'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
 import ManageJobs from './pages/ManageJobs'
+import AdminDashboard from './components/AdminDashboard';
+import JobSeekerDashboard from './components/JobSeekerDashBoard'
+import RecruiterDashboard from './components/RecruiterDashboard.jsx';
+import AuthProvider, { AuthContext } from './context/AuthContext';
+import { useContext } from 'react';
 import { JobContext } from "./context/JobContext"; 
 
+const ProtectedRoute = ({ children, role }) => {
+  const { user } = useContext(AuthContext);
+  if (!user) return <Navigate to="/login" />;
+  if (role && user.role !== role) return <Navigate to="/login" />;
+  return children;
+};
 
 const jobs = [
   { id: 1, title: "Software Engineer", company: "Tech Corp", location: "Remote", description: "Develop and maintain software solutions." },
@@ -30,7 +40,7 @@ const jobs = [
 
 const App = () => {
   return (
-      
+      <AuthProvider>
         <div className="min-h-screen bg-gray-100">
           <Navbar />
           <JobContext.Provider value={jobs}>
@@ -38,17 +48,17 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/profile" element={<Profile />} />
-            <Route path="/dashboard/settings" element={<Settings />} />
-            <Route path="/dashboard/jobs" element={<ManageJobs />} />
             <Route path="/jobs" element={<JobList />} />
             <Route path="/jobs/:id" element={<JobDetail />} />
             <Route path="/post-job" element={<PostJob />} />
+            <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/job-seeker" element={<ProtectedRoute role="job_seeker"><JobSeekerDashboard /></ProtectedRoute>} />
+            <Route path="/recruiter" element={<ProtectedRoute role="recruiter"><RecruiterDashboard /></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
           </JobContext.Provider>
         </div>
-      
+        </AuthProvider>
   )
 }
 
