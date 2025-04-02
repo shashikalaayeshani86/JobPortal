@@ -6,7 +6,9 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import JobList from './pages/JobList'
 import JobDetail from './pages/JobDetail'
-import PostJob from './pages/PostJob'
+import PostJob from './components/Recruiter/PostJob'
+import { RecruiterSettings } from './components/Recruiter/RecruiterSettings.jsx'
+import { ViewApplications } from './components/Recruiter/ViewApplications.jsx'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
 import ManageJobs from './pages/ManageJobs'
@@ -58,7 +60,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/jobs" element={<JobList />} />
             <Route path="/jobs/:id" element={<JobDetail />} />
-            <Route path="/post-job" element={<PostJob />} />
+
             <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
             <Route path="/user-management" element={<ProtectedRoute role="admin"><UserManagement /></ProtectedRoute>} />
             <Route path="/job-postings" element={<ProtectedRoute role="admin"><JobPostings /></ProtectedRoute>} />
@@ -72,6 +74,10 @@ const App = () => {
             <Route path="/profile-settings" element={<ProtectedRoute role="job_seeker"><ProfileSettings /></ProtectedRoute>} />
 
             <Route path="/recruiter" element={<ProtectedRoute role="recruiter"><RecruiterDashboard /></ProtectedRoute>} />
+            <Route path="/post-job" element={<ProtectedRoute role="recruiter"><PostJob/></ProtectedRoute>} />
+            <Route path="/view-applications" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
+            <Route path="/recruiter-settings" element={<ProtectedRoute role="recruiter"><RecruiterSettings /></ProtectedRoute>} />
+
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
           </JobContext.Provider>

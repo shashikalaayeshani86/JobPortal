@@ -24,7 +24,7 @@ const JobPostings = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow">
+    <div className="p-6 rounded-lg shadow bg-gradient-to-bl from-teal-200 via-cyan-300 to-blue-400">
       <h2 className="mb-4 text-2xl font-semibold">Job Postings</h2>
       <div className="mb-4">
         <Link to="/create-job-posting" className="flex items-center text-green-600">

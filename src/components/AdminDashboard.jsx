@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gradient-to-bl from-teal-200 via-cyan-300 to-blue-400 ">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg">
+      <aside className="w-64 shadow-lg bg-gradient-to-bl from-teal-200 via-cyan-300 to-blue-400">
         <div className="p-6 text-lg font-bold text-center border-b">Admin Panel</div>
         <nav className="p-4">
           <ul className="space-y-4">

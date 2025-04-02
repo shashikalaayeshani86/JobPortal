@@ -4,9 +4,9 @@ import { Link, Route, Routes, Router as BrowserRouter } from "react-router-dom";
 
 const JobSeekerDashboard = () => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gradient-to-br from-pink-100 via-rose-200 to-orange-100 ">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg">
+      <aside className="w-64 shadow-lg bg-gradient-to-br from-pink-100 via-rose-200 to-orange-100">
           <div className="p-6 text-lg font-bold text-center border-b">Job Seeker Panel</div>
           <nav className="p-4">
             <ul className="space-y-4">
