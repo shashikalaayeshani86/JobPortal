@@ -25,6 +25,7 @@ import { JobContext } from "./context/JobContext";
 import MyApplications from './components/JobSeeker/MyApplication.jsx'
 import SavedJobs from './components/JobSeeker/SavedJobs.jsx'
 import ProfileSettings from './components/JobSeeker/ProfileSettings.jsx'
+import Footer from './components/Footer.jsx'
 
 
 const ProtectedRoute = ({ children, role }) => {
@@ -81,6 +82,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
           </JobContext.Provider>
+          <Footer/>
         </div>
         </AuthProvider>
   )
