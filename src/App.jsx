@@ -26,6 +26,9 @@ import MyApplications from './components/JobSeeker/MyApplication.jsx'
 import SavedJobs from './components/JobSeeker/SavedJobs.jsx'
 import ProfileSettings from './components/JobSeeker/ProfileSettings.jsx'
 import Footer from './components/Footer.jsx'
+import AdminLayout from './layouts/AdminLayout.jsx'
+import RecruiterLayout from './layouts/RecruiterLayout.jsx'
+import JobSeekerLayout from './layouts/JobSeekerLayout.jsx'
 
 
 const ProtectedRoute = ({ children, role }) => {
@@ -62,23 +65,52 @@ const App = () => {
             <Route path="/jobs" element={<JobList />} />
             <Route path="/jobs/:id" element={<JobDetail />} />
 
-            <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/user-management" element={<ProtectedRoute role="admin"><UserManagement /></ProtectedRoute>} />
-            <Route path="/job-postings" element={<ProtectedRoute role="admin"><JobPostings /></ProtectedRoute>} />
-            <Route path="/analytics" element={<ProtectedRoute role="admin"><Analytics /></ProtectedRoute>} />
-            <Route path="/reports" element={<ProtectedRoute role="admin"><Reports /></ProtectedRoute>} />
+            <Route
+        path="/admin"
+        element={
+          <ProtectedRoute role="admin">
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        {/* Nested routes inside AdminLayout */}
+        <Route index element={<AdminDashboard />} />
+        <Route path="user-management" element={<UserManagement />} />
+        <Route path="job-postings" element={<JobPostings />} />
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="reports" element={<Reports />} />
+      </Route>
+      
+            <Route
+        path="/job-seeker"
+        element={
+          <ProtectedRoute role="job_seeker">
+            <JobSeekerLayout />
+          </ProtectedRoute>
+        }
+        >
+          <Route index element={<JobSeekerDashboard />} />
+          <Route path="jobs" element={<JobList />} />
+          <Route path="my-applications" element={<MyApplications />} />
+          <Route path="saved-jobs" element={<SavedJobs />} />
+          <Route path="profile-settings" element={<ProfileSettings />} />
+        </Route>
+          
+        <Route
+          path="/recruiter"
+          element={
+            <ProtectedRoute role="recruiter">
+              <RecruiterLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<RecruiterDashboard />} />
+          <Route path="post-job" element={<PostJob />} />
+          <Route path="view-applications" element={<ViewApplications />} />
+          <Route path="settings" element={<RecruiterSettings />} />
+        </Route>
 
-            <Route path="/job-seeker" element={<ProtectedRoute role="job_seeker"><JobSeekerDashboard /></ProtectedRoute>} />
-            <Route path="/jobs" element={<ProtectedRoute role="job_seeker"><JobList/></ProtectedRoute>} />
-            <Route path="/my-applications" element={<ProtectedRoute role="job_seeker"><MyApplications /></ProtectedRoute>} />
-            <Route path="/saved-jobs" element={<ProtectedRoute role="job_seeker"><SavedJobs /></ProtectedRoute>} />
-            <Route path="/profile-settings" element={<ProtectedRoute role="job_seeker"><ProfileSettings /></ProtectedRoute>} />
-
-            <Route path="/recruiter" element={<ProtectedRoute role="recruiter"><RecruiterDashboard /></ProtectedRoute>} />
-            <Route path="/post-job" element={<ProtectedRoute role="recruiter"><PostJob/></ProtectedRoute>} />
-            <Route path="/view-applications" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
-            <Route path="/recruiter-settings" element={<ProtectedRoute role="recruiter"><RecruiterSettings /></ProtectedRoute>} />
-
+        
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
           </JobContext.Provider>
